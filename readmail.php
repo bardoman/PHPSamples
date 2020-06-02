@@ -67,13 +67,15 @@ var_dump($part);
 echo "<br>";
 
 
-/*
+
         if ($part->subtype == 'PLAIN') {
             
 echo "<br>partType=>PLAIN<br>";
-
+$body = imap_fetchbody($mbox, $emails[$cnt], $i+1);
+$body=imap_base64($body);
+echo $body;
         }
-        else if($part->subtype == 'HTML') {
+      /*  else if($part->subtype == 'HTML') {
               echo "<br>partType=>HTML<br>";
 
         }
