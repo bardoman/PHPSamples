@@ -12,13 +12,13 @@ $mbox = imap_open("{mx.sdf.org:143}INBOX", "bardoman",
 
 //$status = imap_setflag_full($mbox, "75,76", "\\Answered");
 
-$status = imap_clearflag_full($mbox, "75,76,77", "\\Answered");
+$status = imap_clearflag_full($mbox, "75,76,77,79", "\\Answered");
 
 
 
-$result = imap_fetch_overview($mbox,"75,76,77",0);
+$result = imap_fetch_overview($mbox,"75,76,77,79",0);
 
- var_dump($result);
+ //var_dump($result);
 
  echo $bar;
 
