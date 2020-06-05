@@ -26,6 +26,11 @@ echo $bar;
 
 for ($cnt = 0; $cnt <= $size; $cnt++) {
 
+    $result = imap_fetch_overview($mbox,$emails[$cnt],0);
+    $overview=$result[0];
+    if($overview->answered==0)
+    {
+    
 
 $obj_thang = imap_headerinfo($mbox, $emails[$cnt]);
 
@@ -110,10 +115,11 @@ echo $bar;
 echo $bar;
          }
 
-
+}
+}
      //close the stream
      imap_close($mbox);
-}
+
 
 
 ?>
