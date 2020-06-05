@@ -21,6 +21,11 @@ echo $bar;
 
 for ($cnt = 0; $cnt <= $size; $cnt++) {//loop thru emails
 
+ $result = imap_fetch_overview($mbox,$emails[$cnt],0);
+    $overview=$result[0];
+    if($overview->answered==0)
+    {
+
 $headerinfo = imap_headerinfo($mbox, $emails[$cnt]);
 
 echo "date:" . date("F j, Y, g:i a", $headerinfo->udate) . "<br>"; 
@@ -50,8 +55,9 @@ $body = imap_fetchbody($mbox, $emails[$cnt], $i+1);
 $body=imap_base64($body);
 echo $body;
  mail("$headerinfo->fromaddress","torusReply", $body);
+  $status = imap_setflag_full($mbox, $emails[$cnt], "\\Answered");
         } 
-
+/*
         if ($part->subtype == 'HTML') {
             
 echo "<br>partType[" . $i . "]=>HTML<br>";
@@ -61,6 +67,7 @@ echo imap_qprint($body);
 //echo $body;
 // mail("$headerinfo->fromaddress","torusReply", $body);
         } 
+        */
 
 
      }//end of part for loop
@@ -70,9 +77,9 @@ echo $bar;
     }
 //}
          }//end of email for loopo
-
-     imap_close($mbox);
 }
+}
+     imap_close($mbox);
 
 
 ?>
