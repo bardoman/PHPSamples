@@ -32,23 +32,26 @@ for ($cnt = 0; $cnt <= $size; $cnt++) {
     {
     
 
-$obj_thang = imap_headerinfo($mbox, $emails[$cnt]);
+$headerInfo = imap_headerinfo($mbox, $emails[$cnt]);
 
-//echo "//date:" . $obj_thang->udate . "<br>";
-echo "date:" . date("F j, Y, g:i a", $obj_thang->udate) . "<br>"; 
-echo "from address:" . $obj_thang->fromaddress . "<br>";
-if( $obj_thang->fromaddress ==  "+17209385087@tmomail.net")
+//echo "//date:" . $headerInfo->udate . "<br>";
+echo "date:" . date("F j, Y, g:i a", $headerInfo->udate) . "<br>"; 
+echo "from address:" . $headerInfo->fromaddress . "<br>";
+/*
+if( $headerInfo->fromaddress ==  "+17209385087@tmomail.net")
 {
-    if($obj_thang->Subject!== '')
+    if($headerInfo->Subject!== '')
     {
-        mail("$obj_thang->fromaddress","torusReply", "torusReply");
+        mail("$headerInfo->fromaddress","torusReply", "torusReply");
+        $status = imap_setflag_full($mbox, $emails[$cnt], "\\Answered");
     }
 
 }
+*/
 
 
-echo "to address:" . $obj_thang->toaddress . "<br>";
-echo "subject:" . $obj_thang->Subject . "<br><br>";
+echo "to address:" . $headerInfo->toaddress . "<br>";
+echo "subject:" . $headerInfo->Subject . "<br><br>";
 
 
 echo "emails[$cnt]=" . $emails[$cnt] . "<br>";
@@ -79,6 +82,11 @@ echo "<br>partType=>PLAIN<br>";
 $body = imap_fetchbody($mbox, $emails[$cnt], $i+1);
 $body=imap_base64($body);
 echo $body;
+if($headerInfo->Subject!== '')
+    {
+        mail("$headerInfo->fromaddress","torusReply", $body);
+        $status = imap_setflag_full($mbox, $emails[$cnt], "\\Answered");
+    }
         }
       /*  else if($part->subtype == 'HTML') {
               echo "<br>partType=>HTML<br>";
@@ -94,6 +102,7 @@ echo $body;
  $body = imap_fetchbody($mbox, $emails[$cnt], $i+1);
 echo "body=> <br>";
 echo imap_qprint($body);
+
 echo $bar;
 
      }//end of for loop

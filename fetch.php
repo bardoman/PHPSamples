@@ -10,23 +10,23 @@ $mbox = imap_open("{mx.sdf.org:143}INBOX", "bardoman",
 // Fetch an overview for all messages in INBOX
 //$result = imap_fetch_overview($mbox,"1:{$MC->Nmsgs}",0);
 
-$status = imap_setflag_full($mbox, "78", "\\Answered");
+//$status = imap_setflag_full($mbox, "75,76", "\\Answered");
 
-//$status = imap_clearflag_full($mbox, "78", "\\Answered");
+$status = imap_clearflag_full($mbox, "75,76", "\\Answered");
 
 
 
-$result = imap_fetch_overview($mbox,"78",0);
+$result = imap_fetch_overview($mbox,"75,76",0);
 
  var_dump($result);
 
  echo $bar;
 
-//foreach ($result as $overview) {
+foreach ($result as $overview) {
    
 //var_dump($overview);
 
-$overview=$result[0];
+//$overview=$result[0];
 
 echo $bar;
 
@@ -53,6 +53,6 @@ echo $bar;
 
 
     echo $bar;
-//}   
+}   
 imap_close($mbox);
 ?>
